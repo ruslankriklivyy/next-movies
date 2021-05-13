@@ -9,6 +9,8 @@ export const moviesInitialState = {
   genres: [] as IGenresItem[],
   chosenMovie: {} as IMoviesResult,
   chosenMovieTrailer: [] as ITrailerByIdResults[],
+  totalPages: 20,
+  currentPage: 1,
 };
 
 const moviesReducer = (state = moviesInitialState, action: MoviesActions) => {

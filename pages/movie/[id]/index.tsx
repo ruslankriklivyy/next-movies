@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import ReactStars from 'react-rating-stars-component';
-
-import { IMoviesResult } from '../../interfaces/interfaces';
-
-import styles from '../../styles/moviePage.module.scss';
-import halfStarSvg from '../../assets/images/star-half.svg';
-import emptyStarSvg from '../../assets/images/empty-star.svg';
-import fullStarSvg from '../../assets/images/star.svg';
-import cancelSvg from '../../assets/images/cancel.svg';
-import playSvg from '../../assets/images/play.svg';
+import Head from 'next/head';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../reducers';
-import { getMovieTrailer } from '../../actions';
+
+import { IMoviesResult } from '../../../interfaces/interfaces';
+import styles from '../../../styles/moviePage.module.scss';
+import { RootState } from '../../../reducers';
+import { getMovieTrailer } from '../../../actions';
+
+import halfStarSvg from '../../../assets/images/star-half.svg';
+import emptyStarSvg from '../../../assets/images/empty-star.svg';
+import fullStarSvg from '../../../assets/images/star.svg';
+import cancelSvg from '../../../assets/images/cancel.svg';
+import playSvg from '../../../assets/images/play.svg';
 
 interface IMoviePageProps {
   data: IMoviesResult;
@@ -63,6 +64,9 @@ const MoviePage: React.FC<IMoviePageProps> = ({ data }) => {
 
   return (
     <div className={styles.movie}>
+      <Head>
+        <title>Next Movies | {data.title}</title>
+      </Head>
       {visibleTrailer && (
         <div className={styles.trailer}>
           <div className={styles.trailerBox}>

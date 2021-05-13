@@ -75,12 +75,12 @@ const SortBy = () => {
         <div className={styles.sortbyBox}>
           {genres.length > 0 &&
             genres.slice(0, 6).map((item) => (
-              <Link href={`/genre/${item.id}`} key={item.id}>
+              <Link href={`/sortby/${query.sortName ?? 'popularity'}/${item.id}`} key={item.id}>
                 <a
                   className={
                     Number(item.id) === Number(query.genreId) ? styles.active : styles.sortbyGenre
                   }
-                  href={`/genre/${item.id}`}>
+                  href={`/sortby/${query.sortName ?? 'popularity'}/${item.id}`}>
                   {item.name}
                 </a>
               </Link>
@@ -92,14 +92,14 @@ const SortBy = () => {
             <div className={styles.moreGenres}>
               {genres.length > 0 &&
                 genres.slice(6).map((item) => (
-                  <Link href={`/genre/${item.id}`} key={item.id}>
+                  <Link href={`/sortby/${query.sortName ?? 'popularity'}/${item.id}`} key={item.id}>
                     <a
                       className={
                         Number(item.id) === Number(query.genreId)
                           ? styles.active
                           : styles.sortbyGenre
                       }
-                      href={`/genre/${item.id}`}>
+                      href={`/sortby/${query.sortName ?? 'popularity'}/${item.id}`}>
                       {item.name}
                     </a>
                   </Link>
@@ -117,9 +117,9 @@ const SortBy = () => {
         {visibleSortBy && (
           <div className={styles.sortbyMore}>
             {sortByArr.map((item) => (
-              <Link href={`/sortby/${item.type.toLowerCase()}`} key={item.id}>
+              <Link href={`/sortby/${item.type.toLowerCase()}/${query.genreId}`} key={item.id}>
                 <a
-                  href={`/sortby/${item.type.toLowerCase()}`}
+                  href={`/sortby/${item.type.toLowerCase()}/${query.genreId}`}
                   className={styles.sortbyMoreItem}
                   key={item.id}
                   onClick={() => setVisibleSortBy(!visibleSortBy)}>

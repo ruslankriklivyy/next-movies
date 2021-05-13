@@ -1,13 +1,18 @@
 import React from 'react';
 import Link from 'next/link';
+import Head from 'next/head';
 
 import styles from '../styles/movies.module.scss';
 import { IMoviesResult } from '../interfaces/interfaces';
 import starSvg from '../assets/images/star.svg';
+import Paginator from './Paginator';
 
 const Movies = ({ data }) => {
   return (
     <div className={styles.movies}>
+      <Head>
+        <title>Next Movies | Main Page</title>
+      </Head>
       <h2 className={styles.title}>New films</h2>
       <div className={styles.moviesItem}>
         {data.results?.map((item: IMoviesResult) => (
@@ -19,7 +24,6 @@ const Movies = ({ data }) => {
                 className={styles.moviesImage}
               />
               <h4>{item.title}</h4>
-
               <div className={styles.moviesBottom}>
                 <span>{new Date(item.release_date).getFullYear()}</span>
                 <div className={styles.moviesRating}>
@@ -31,6 +35,7 @@ const Movies = ({ data }) => {
           </Link>
         ))}
       </div>
+      <Paginator />
     </div>
   );
 };

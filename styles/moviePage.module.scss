@@ -1,0 +1,143 @@
+.movie {
+  padding-top: 40px;
+  .trailer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 200;
+    width: 90%;
+    height: 90%;
+  }
+  .trailerCancel {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    z-index: 300;
+    background: #2e2f37;
+    border: none;
+    border-radius: 2px;
+    padding: 8px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    &:hover {
+      background: #16151d;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .trailerBox {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    iframe {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border: none;
+    }
+  }
+  .movieName {
+    font-size: 35px;
+    margin-bottom: 20px;
+  }
+  .movieBottom {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  .movieDescription {
+    line-height: 1.4;
+    color: #16151d;
+    font-size: 18px;
+  }
+  .movieTop {
+    display: flex;
+    margin-bottom: 60px;
+    .movieLeft {
+      margin-right: 50px;
+      img {
+        width: 520px;
+        height: 600px;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+    }
+    .movieRight {
+      .movieRightActions {
+        margin-bottom: 25px;
+        button {
+          display: inline-flex;
+          align-items: center;
+          font-weight: 500;
+          letter-spacing: 1px;
+          background: transparent;
+          border-radius: 7px;
+          font-size: 18px;
+          padding: 15px 20px;
+          border: 2px solid #2e2f37;
+          cursor: pointer;
+          transition: all 0.2s ease;
+
+          img {
+            width: 23px;
+            height: 23px;
+            margin-right: 15px;
+          }
+
+          &:hover {
+            background: #2e2f37;
+          }
+          &:first-child {
+            margin-right: 20px;
+          }
+        }
+      }
+      .movieRightRating {
+        img {
+          width: 20px;
+          height: 20px;
+          margin-right: 10px;
+        }
+        font-size: 28px;
+        margin-bottom: 25px;
+      }
+      .movieRightInfoGenres {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        width: 71%;
+        margin-left: auto;
+        text-align: left;
+        p {
+          width: auto !important;
+          padding-right: 3px;
+        }
+      }
+      .movieRightInfo {
+      }
+      .movieRightInfoItem {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        border-bottom: 2px solid #2e2f37;
+        padding-bottom: 10px;
+
+        span {
+          opacity: 0.7;
+          margin-right: 10px;
+        }
+        p {
+          display: block;
+          text-align: left;
+          width: 65%;
+          margin-left: auto;
+        }
+      }
+    }
+  }
+}

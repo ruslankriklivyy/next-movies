@@ -33,8 +33,6 @@ const MoviePage: React.FC<IMoviePageProps> = ({ data }) => {
   const { chosenMovieTrailer, creditsMovie } = useSelector((state: RootState) => state.movies);
   const [visibleTrailer, setVisibleTrailer] = useState(false);
 
-  console.log(creditsMovie);
-
   const closeVisibleTrailer = () => {
     setVisibleTrailer(false);
   };
@@ -141,10 +139,12 @@ const MoviePage: React.FC<IMoviePageProps> = ({ data }) => {
                 <span>Year</span>
                 <p>{new Date(data.release_date).getFullYear()}</p>
               </div>
-              <div className={styles.movieRightInfoItem}>
-                <span>Budget</span>
-                <p>{priceConvert(data.budget)}$</p>
-              </div>
+              {data.budget > 0 && (
+                <div className={styles.movieRightInfoItem}>
+                  <span>Budget</span>
+                  <p>{priceConvert(data.budget)}$</p>
+                </div>
+              )}
               <div className={styles.movieRightInfoItem}>
                 <span>Country</span>
                 <div className={styles.movieRightInfoGenres}>
@@ -164,7 +164,7 @@ const MoviePage: React.FC<IMoviePageProps> = ({ data }) => {
               <div className={styles.movieRightInfoItem}>
                 <span>Director</span>
                 <div className={styles.movieRightInfoGenres}>
-                  {creditsMovie?.crew.map(
+                  {creditsMovie?.crew?.map(
                     (item) => item.job === 'Director' && <p key={item.id}>{item.name}</p>,
                   )}
                 </div>
@@ -172,7 +172,7 @@ const MoviePage: React.FC<IMoviePageProps> = ({ data }) => {
               <div className={styles.movieRightInfoItem}>
                 <span>Casts</span>
                 <div className={styles.movieRightInfoGenres}>
-                  {creditsMovie?.cast.slice(0, 5).map((item) => (
+                  {creditsMovie?.cast?.slice(0, 5).map((item) => (
                     <p key={item.id}>{item.name}</p>
                   ))}
                   ...

@@ -111,15 +111,31 @@ const SortBy = () => {
       <div className={styles.sortbyItem}>
         <h4 className={styles.sortbyName}>Sort by :</h4>
         <div className={styles.sortbyChose} onClick={() => setVisibleSortBy(!visibleSortBy)}>
-          <img src={sortSvg} alt="sort svg" />
-          <span>Default</span>
+          {query.sortName ? (
+            sortByArr.map(
+              (item) =>
+                item.type === query.sortName && (
+                  <>
+                    <img src={item.img} alt="sort svg" />
+                    <span>{item.name}</span>
+                  </>
+                ),
+            )
+          ) : (
+            <>
+              <img src={sortSvg} alt="sort svg" />
+              <span>Default</span>
+            </>
+          )}
         </div>
         {visibleSortBy && (
           <div className={styles.sortbyMore}>
             {sortByArr.map((item) => (
-              <Link href={`/sortby/${item.type.toLowerCase()}/${query.genreId}`} key={item.id}>
+              <Link
+                href={`/sortby/${item.type.toLowerCase()}/${query.genreId ?? '28'}`}
+                key={item.id}>
                 <a
-                  href={`/sortby/${item.type.toLowerCase()}/${query.genreId}`}
+                  href={`/sortby/${item.type.toLowerCase()}/${query.genreId ?? '28'}`}
                   className={styles.sortbyMoreItem}
                   key={item.id}
                   onClick={() => setVisibleSortBy(!visibleSortBy)}>

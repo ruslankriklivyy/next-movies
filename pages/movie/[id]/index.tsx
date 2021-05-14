@@ -13,6 +13,7 @@ import emptyStarSvg from '../../../assets/images/empty-star.svg';
 import fullStarSvg from '../../../assets/images/star.svg';
 import cancelSvg from '../../../assets/images/cancel.svg';
 import playSvg from '../../../assets/images/play.svg';
+import defaultMoviePng from '../../../assets/images/default-movie.png';
 
 interface IMoviePageProps {
   data: IMoviesResult;
@@ -90,7 +91,11 @@ const MoviePage: React.FC<IMoviePageProps> = ({ data }) => {
         <div className={styles.movieTop}>
           <div className={styles.movieLeft}>
             <img
-              src={data.poster_path && `https://image.tmdb.org/t/p/w500/${data.poster_path}`}
+              src={
+                data.poster_path
+                  ? `https://image.tmdb.org/t/p/w500/${data.poster_path}`
+                  : defaultMoviePng
+              }
               alt="movie img"
             />
           </div>

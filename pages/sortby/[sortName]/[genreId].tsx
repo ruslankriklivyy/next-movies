@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { IMoviesResult } from '../../../interfaces/interfaces';
 import AppMain from '../../../components/AppMain';
 
-const MovieGenre = ({ data, page }) => {
+const MovieGenre = ({ data, page, search }) => {
   const { query, pathname } = useRouter();
   const currentQuery = { ...query };
 
@@ -12,8 +12,11 @@ const MovieGenre = ({ data, page }) => {
 
 export async function getServerSideProps({ query, req }) {
   const page = query.page || 1;
+  const search = query.search || '';
   const res = await fetch(
-    `https://api.themoviedb.org/3/discover/movie?api_key=74d41124b9d3bafd09d832463dd78216&with_genres=${query.genreId}&sort_by=${query.sortName}.desc&page=${page}`,
+    `https://api.themoviedb.org/3/discover/movie?api_key=74d41124b9d3bafd09d832463dd78216${
+      query.genreId ? `&with_genres=${query.genreId}` : ''
+    }&sort_by=${query.sortName ? query.sortName : ''}.desc&page=${page}`,
   );
   const data: IMoviesResult[] = await res.json();
 
@@ -21,6 +24,7 @@ export async function getServerSideProps({ query, req }) {
     props: {
       data,
       page,
+      search,
     },
   };
 }

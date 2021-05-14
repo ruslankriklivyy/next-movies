@@ -20,9 +20,14 @@ const AppMain = ({ data, pathname, currentQuery, page }) => {
     }
   };
 
+  const handleSearchVal = (val) => {
+    currentQuery.search = val;
+    router.push({ pathname, query: currentQuery });
+  };
+
   return (
     <div className="container">
-      <Header />
+      <Header handleSearchVal={handleSearchVal} />
       <SortBy />
       <Movies data={data} />
       <PaginationBtns plusPage={plusPage} minusPage={minusPage} page={Number(currentQuery.page)} />

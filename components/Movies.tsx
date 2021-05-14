@@ -5,7 +5,7 @@ import Head from 'next/head';
 import styles from '../styles/movies.module.scss';
 import { IMoviesResult } from '../interfaces/interfaces';
 import starSvg from '../assets/images/star.svg';
-import Paginator from './Paginator';
+import defaultMoivePng from '../assets/images/default-movie.png';
 
 const Movies = ({ data }) => {
   return (
@@ -19,7 +19,11 @@ const Movies = ({ data }) => {
           <Link href={`/movie/${item.id}`} key={item.id}>
             <a href={`/movie/${item.id}`}>
               <img
-                src={item.poster_path && `https://image.tmdb.org/t/p/w500/${item.poster_path}`}
+                src={
+                  item.poster_path
+                    ? `https://image.tmdb.org/t/p/w500/${item.poster_path}`
+                    : defaultMoivePng
+                }
                 alt="poster img"
                 className={styles.moviesImage}
               />

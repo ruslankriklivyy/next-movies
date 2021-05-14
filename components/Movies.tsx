@@ -35,7 +35,6 @@ const Movies = ({ data }) => {
           </Link>
         ))}
       </div>
-      <Paginator />
     </div>
   );
 };

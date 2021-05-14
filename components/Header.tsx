@@ -14,7 +14,7 @@ const Header = ({ handleSearchVal }) => {
     handleSearchVal(searchValue);
   };
 
-  const handleKeyDown = (e: any) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       onSendSearchVal();
     }

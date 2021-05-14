@@ -1,8 +1,9 @@
-import { moviesInitialState } from './reducers';
 import { ThunkAction } from 'redux-thunk';
-import * as types from './types';
 import axios from 'axios';
-import { IGenresItem, IMoviesResult, ITrailerByIdResults } from './interfaces/interfaces';
+
+import * as types from './types';
+import { ICredits, IGenresItem, IMoviesResult, ITrailerByIdResults } from './interfaces/interfaces';
+import { moviesInitialState } from './reducers';
 
 const instance = axios.create({
   baseURL: 'https://api.themoviedb.org/3/',
@@ -10,6 +11,15 @@ const instance = axios.create({
 const apiKey = '?api_key=74d41124b9d3bafd09d832463dd78216';
 
 type MoviesThunk = ThunkAction<Promise<void>, typeof moviesInitialState, unknown, MoviesActions>;
+
+export const getCredits =
+  (movieId: number | string): MoviesThunk =>
+  async (dispatch) => {
+    const data: ICredits = await instance
+      .get(`movie/${movieId}/credits${apiKey}`)
+      .then(({ data }) => data);
+    dispatch(setCredits(data));
+  };
 
 export const getMovies = (): MoviesThunk => async (dispatch) => {
   const data: IMoviesResult[] = await instance
@@ -40,6 +50,16 @@ export const getMovieTrailer = (movieId: number | string) => async (dispatch) =>
     .then(({ data }) => data.results);
   dispatch(setTrailer(data));
 };
+
+interface ISetCredits {
+  type: typeof types.SET_CREDITS;
+  payload: ICredits;
+}
+
+export const setCredits = (credits: ICredits): ISetCredits => ({
+  type: types.SET_CREDITS,
+  payload: credits,
+});
 
 interface ISetMovieId {
   type: typeof types.SET_TRAILER;
@@ -81,4 +101,4 @@ export const setChosenMovie = (movie: IMoviesResult): ISetChosenMovie => ({
   payload: movie,
 });
 
-export type MoviesActions = ISetMovies | ISetGenres | ISetChosenMovie | ISetMovieId;
+export type MoviesActions = ISetMovies | ISetGenres | ISetChosenMovie | ISetMovieId | ISetCredits;

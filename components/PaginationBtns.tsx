@@ -1,4 +1,5 @@
 import React from 'react';
+
 import arrowSvg from '../assets/images/arrow.svg';
 import styles from '../styles/pagination.module.scss';
 

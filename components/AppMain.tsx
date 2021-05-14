@@ -20,9 +20,11 @@ const AppMain = ({ data, pathname, currentQuery, page }) => {
     }
   };
 
-  const handleSearchVal = (val) => {
-    currentQuery.search = val;
-    router.push({ pathname, query: currentQuery });
+  const handleSearchVal = (val: string) => {
+    if (val !== '') {
+      currentQuery.search = val;
+      router.push({ pathname, query: currentQuery });
+    }
   };
 
   return (

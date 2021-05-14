@@ -2,8 +2,10 @@ import React from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 
-import styles from '../styles/movies.module.scss';
 import { IMoviesResult } from '../interfaces/interfaces';
+
+import styles from '../styles/movies.module.scss';
+
 import starSvg from '../assets/images/star.svg';
 import defaultMoivePng from '../assets/images/default-movie.png';
 

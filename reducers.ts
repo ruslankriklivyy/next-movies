@@ -1,7 +1,6 @@
-import { type } from 'os';
 import { combineReducers } from 'redux';
 import { MoviesActions } from './actions';
-import { IGenresItem, IMoviesResult, ITrailerByIdResults } from './interfaces/interfaces';
+import { ICredits, IGenresItem, IMoviesResult, ITrailerByIdResults } from './interfaces/interfaces';
 import * as types from './types';
 
 export const moviesInitialState = {
@@ -9,6 +8,7 @@ export const moviesInitialState = {
   genres: [] as IGenresItem[],
   chosenMovie: {} as IMoviesResult,
   chosenMovieTrailer: [] as ITrailerByIdResults[],
+  creditsMovie: {} as ICredits,
   totalPages: 20,
 };
 
@@ -36,6 +36,12 @@ const moviesReducer = (state = moviesInitialState, action: MoviesActions) => {
       return {
         ...state,
         chosenMovieTrailer: action.payload,
+      };
+
+    case types.SET_CREDITS:
+      return {
+        ...state,
+        creditsMovie: action.payload,
       };
 
     default:

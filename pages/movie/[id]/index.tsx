@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import ReactStars from 'react-rating-stars-component';
 import Head from 'next/head';
+import { NextApiRequest, NextApiResponse } from 'next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { IMoviesResult } from '../../../interfaces/interfaces';
-import styles from '../../../styles/moviePage.module.scss';
 import { RootState } from '../../../reducers';
-import { getMovieTrailer } from '../../../actions';
+import { getCredits, getMovieTrailer } from '../../../actions';
+import styles from '../../../styles/moviePage.module.scss';
 
 import halfStarSvg from '../../../assets/images/star-half.svg';
 import emptyStarSvg from '../../../assets/images/empty-star.svg';
@@ -14,15 +15,25 @@ import fullStarSvg from '../../../assets/images/star.svg';
 import cancelSvg from '../../../assets/images/cancel.svg';
 import playSvg from '../../../assets/images/play.svg';
 import defaultMoviePng from '../../../assets/images/default-movie.png';
+import priceConvert from '../../../utils/priceConvert';
 
+interface IMovieDetailsCountry {
+  name: string;
+}
+interface IMovieDetails extends IMoviesResult {
+  budget: number;
+  production_countries: IMovieDetailsCountry[];
+}
 interface IMoviePageProps {
-  data: IMoviesResult;
+  data: IMovieDetails;
 }
 
 const MoviePage: React.FC<IMoviePageProps> = ({ data }) => {
   const dispatch = useDispatch();
-  const { chosenMovieTrailer } = useSelector((state: RootState) => state.movies);
+  const { chosenMovieTrailer, creditsMovie } = useSelector((state: RootState) => state.movies);
   const [visibleTrailer, setVisibleTrailer] = useState(false);
+
+  console.log(creditsMovie);
 
   const closeVisibleTrailer = () => {
     setVisibleTrailer(false);
@@ -30,6 +41,10 @@ const MoviePage: React.FC<IMoviePageProps> = ({ data }) => {
 
   useEffect(() => {
     dispatch(getMovieTrailer(data.id));
+  }, [dispatch, data]);
+
+  useEffect(() => {
+    dispatch(getCredits(data.id));
   }, [dispatch, data]);
 
   const escapeListener = React.useCallback(
@@ -127,8 +142,16 @@ const MoviePage: React.FC<IMoviePageProps> = ({ data }) => {
                 <p>{new Date(data.release_date).getFullYear()}</p>
               </div>
               <div className={styles.movieRightInfoItem}>
+                <span>Budget</span>
+                <p>{priceConvert(data.budget)}$</p>
+              </div>
+              <div className={styles.movieRightInfoItem}>
                 <span>Country</span>
-                <p>USA</p>
+                <div className={styles.movieRightInfoGenres}>
+                  {data.production_countries.map((item) => (
+                    <p key={item.name}>{item.name}</p>
+                  ))}
+                </div>
               </div>
               <div className={styles.movieRightInfoItem}>
                 <span>Genres</span>
@@ -136,6 +159,23 @@ const MoviePage: React.FC<IMoviePageProps> = ({ data }) => {
                   {data.genres.map((item) => (
                     <p key={item.id}>{item.name}</p>
                   ))}
+                </div>
+              </div>
+              <div className={styles.movieRightInfoItem}>
+                <span>Director</span>
+                <div className={styles.movieRightInfoGenres}>
+                  {creditsMovie?.crew.map(
+                    (item) => item.job === 'Director' && <p key={item.id}>{item.name}</p>,
+                  )}
+                </div>
+              </div>
+              <div className={styles.movieRightInfoItem}>
+                <span>Casts</span>
+                <div className={styles.movieRightInfoGenres}>
+                  {creditsMovie?.cast.slice(0, 5).map((item) => (
+                    <p key={item.id}>{item.name}</p>
+                  ))}
+                  ...
                 </div>
               </div>
             </div>
@@ -149,11 +189,11 @@ const MoviePage: React.FC<IMoviePageProps> = ({ data }) => {
   );
 };
 
-export async function getServerSideProps({ query, req }) {
-  const res = await fetch(
-    `https://api.themoviedb.org/3/movie/${query.id}?api_key=74d41124b9d3bafd09d832463dd78216`,
+export async function getServerSideProps(req: NextApiRequest, res: NextApiResponse<IMoviesResult>) {
+  const resData = await fetch(
+    `https://api.themoviedb.org/3/movie/${req.query.id}?api_key=74d41124b9d3bafd09d832463dd78216`,
   );
-  const data: IMoviesResult = await res.json();
+  const data: IMoviesResult = await resData.json();
 
   return {
     props: {

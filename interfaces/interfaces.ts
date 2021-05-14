@@ -38,3 +38,38 @@ export interface IGenresItem {
   id: number;
   name: string;
 }
+
+export interface ICredits {
+  id: number;
+  cast: ICreditsCasts[];
+  crew: ICreditsCrew[];
+}
+
+export interface ICreditsCrew {
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string;
+  credit_id: number;
+  department: string;
+  job: string;
+}
+
+export interface ICreditsCasts {
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string;
+  cast_id: number;
+  character: string;
+  credit_id: string;
+  order: number;
+}

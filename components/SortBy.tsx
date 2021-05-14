@@ -5,14 +5,14 @@ import { useRouter } from 'next/router';
 
 import { getGenres } from '../actions';
 import { RootState } from '../reducers';
+import { ISortByArr } from '../interfaces/interfaces';
+import styles from '../styles/sortBy.module.scss';
 
 import moreSvg from '../assets/images/more.svg';
 import sortSvg from '../assets/images/sort.svg';
 import starSvg from '../assets/images/star.svg';
 import azSvg from '../assets/images/az.svg';
 import popularSvg from '../assets/images/popular.svg';
-import styles from '../styles/sortBy.module.scss';
-import { ISortByArr } from '../interfaces/interfaces';
 
 const sortByArr: ISortByArr[] = [
   { id: 0, name: 'Default', img: sortSvg, type: 'popularity' },

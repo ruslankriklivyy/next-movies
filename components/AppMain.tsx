@@ -4,8 +4,14 @@ import Movies from './Movies';
 import PaginationBtns from './PaginationBtns';
 import SortBy from './SortBy';
 import { useRouter } from 'next/router';
+import { IMovieGenreProps } from '../interfaces/interfaces';
 
-const AppMain = ({ data, pathname, currentQuery, page }) => {
+interface IAppMainProps extends IMovieGenreProps {
+  pathname: string;
+  currentQuery: any;
+}
+
+const AppMain: React.FC<IAppMainProps> = ({ data, pathname, currentQuery, page, genres }) => {
   const router = useRouter();
 
   const plusPage = () => {
@@ -30,7 +36,7 @@ const AppMain = ({ data, pathname, currentQuery, page }) => {
   return (
     <div className="container">
       <Header handleSearchVal={handleSearchVal} />
-      <SortBy />
+      <SortBy genres={genres} />
       <Movies data={data} />
       <PaginationBtns plusPage={plusPage} minusPage={minusPage} page={Number(currentQuery.page)} />
     </div>

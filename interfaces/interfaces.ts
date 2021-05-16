@@ -73,3 +73,9 @@ export interface ICreditsCasts {
   credit_id: string;
   order: number;
 }
+
+export interface IMovieGenreProps {
+  data: IMoviesResult;
+  page: number;
+  genres: IGenresItem[];
+}

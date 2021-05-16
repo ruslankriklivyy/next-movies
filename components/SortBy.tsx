@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { getGenres } from '../actions';
-import { RootState } from '../reducers';
 import { ISortByArr } from '../interfaces/interfaces';
 import styles from '../styles/sortBy.module.scss';
 
@@ -21,9 +19,9 @@ const sortByArr: ISortByArr[] = [
   { id: 4, name: 'Release date', img: popularSvg, type: 'release_date' },
 ];
 
-const SortBy = () => {
-  const dispatch = useDispatch();
-  const { genres } = useSelector((state: RootState) => state.movies);
+const SortBy = ({ genres }) => {
+  // const dispatch = useDispatch();
+  // const { genres } = useSelector((state: RootState) => state.movies);
   const [visibleGenres, setVisibleGenres] = useState(false);
   const [visibleSortBy, setVisibleSortBy] = useState(false);
 
@@ -37,9 +35,9 @@ const SortBy = () => {
     setVisibleSortBy(false);
   };
 
-  useEffect(() => {
-    dispatch(getGenres());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getGenres());
+  // }, [dispatch]);
 
   const escapeListener = React.useCallback(
     (e) => {
@@ -73,7 +71,7 @@ const SortBy = () => {
       <div className={styles.sortbyItem}>
         <h4 className={styles.sortbyName}>By genre :</h4>
         <div className={styles.sortbyBox}>
-          {genres.length > 0 &&
+          {genres?.length > 0 &&
             genres.slice(0, 6).map((item) => (
               <Link href={`/sortby/${query.sortName ?? 'popularity'}/${item.id}`} key={item.id}>
                 <a
@@ -90,7 +88,7 @@ const SortBy = () => {
           </button>
           {visibleGenres && (
             <div className={styles.moreGenres}>
-              {genres.length > 0 &&
+              {genres?.length > 0 &&
                 genres.slice(6).map((item) => (
                   <Link href={`/sortby/${query.sortName ?? 'popularity'}/${item.id}`} key={item.id}>
                     <a

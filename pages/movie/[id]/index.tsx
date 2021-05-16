@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ReactStars from 'react-rating-stars-component';
 import Head from 'next/head';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { useDispatch, useSelector } from 'react-redux';
 
-import { IMoviesResult } from '../../../interfaces/interfaces';
-import { RootState } from '../../../reducers';
-import { getCredits, getMovieTrailer } from '../../../actions';
+import { ICredits, IMoviesResult, ITrailerByIdResults } from '../../../interfaces/interfaces';
 import styles from '../../../styles/moviePage.module.scss';
 
 import halfStarSvg from '../../../assets/images/star-half.svg';
@@ -26,24 +23,16 @@ interface IMovieDetails extends IMoviesResult {
 }
 interface IMoviePageProps {
   data: IMovieDetails;
+  trailer: ITrailerByIdResults[];
+  credits: ICredits;
 }
 
-const MoviePage: React.FC<IMoviePageProps> = ({ data }) => {
-  const dispatch = useDispatch();
-  const { chosenMovieTrailer, creditsMovie } = useSelector((state: RootState) => state.movies);
+const MoviePage: React.FC<IMoviePageProps> = ({ data, trailer, credits }) => {
   const [visibleTrailer, setVisibleTrailer] = useState(false);
 
   const closeVisibleTrailer = () => {
     setVisibleTrailer(false);
   };
-
-  useEffect(() => {
-    dispatch(getMovieTrailer(data.id));
-  }, [dispatch, data]);
-
-  useEffect(() => {
-    dispatch(getCredits(data.id));
-  }, [dispatch, data]);
 
   const escapeListener = React.useCallback(
     (e) => {
@@ -94,7 +83,7 @@ const MoviePage: React.FC<IMoviePageProps> = ({ data }) => {
               width="468"
               height="460"
               src={`https://www.youtube.com/embed/${
-                chosenMovieTrailer?.length > 0 && chosenMovieTrailer[0].key
+                trailer?.length > 0 && trailer[0].key
               }?showinfo=0`}></iframe>
           </div>
         </div>
@@ -164,7 +153,7 @@ const MoviePage: React.FC<IMoviePageProps> = ({ data }) => {
               <div className={styles.movieRightInfoItem}>
                 <span>Director</span>
                 <div className={styles.movieRightInfoGenres}>
-                  {creditsMovie?.crew?.map(
+                  {credits?.crew?.map(
                     (item) => item.job === 'Director' && <p key={item.id}>{item.name}</p>,
                   )}
                 </div>
@@ -172,7 +161,7 @@ const MoviePage: React.FC<IMoviePageProps> = ({ data }) => {
               <div className={styles.movieRightInfoItem}>
                 <span>Casts</span>
                 <div className={styles.movieRightInfoGenres}>
-                  {creditsMovie?.cast?.slice(0, 5).map((item) => (
+                  {credits?.cast?.slice(0, 5).map((item) => (
                     <p key={item.id}>{item.name}</p>
                   ))}
                   ...
@@ -189,15 +178,27 @@ const MoviePage: React.FC<IMoviePageProps> = ({ data }) => {
   );
 };
 
-export async function getServerSideProps(req: NextApiRequest, res: NextApiResponse<IMoviesResult>) {
-  const resData = await fetch(
-    `https://api.themoviedb.org/3/movie/${req.query.id}?api_key=74d41124b9d3bafd09d832463dd78216`,
+export async function getServerSideProps(
+  req: NextApiRequest,
+  res: NextApiResponse<IMoviePageProps>,
+) {
+  const resData = await fetch(`${process.env.HOST}/movie/${req.query.id}${process.env.API_KEY}`);
+  const resDataTrailer = await fetch(
+    `${process.env.HOST}/movie/${req.query.id}/videos${process.env.API_KEY}`,
   );
-  const data: IMoviesResult = await resData.json();
+  const resDataCredits = await fetch(
+    `${process.env.HOST}/movie/${req.query.id}/credits${process.env.API_KEY}`,
+  );
+
+  const data = await resData.json();
+  const trailer = await resDataTrailer.json();
+  const credits = await resDataCredits.json();
 
   return {
     props: {
       data,
+      trailer: trailer.results,
+      credits,
     },
   };
 }

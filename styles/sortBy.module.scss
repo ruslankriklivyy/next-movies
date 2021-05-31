@@ -147,3 +147,63 @@
     }
   }
 }
+
+@media (max-width: 992px) {
+  .sortby {
+    flex-direction: column;
+    .active {
+      margin-right: 0;
+      margin-bottom: 20px;
+      &::after {
+        bottom: -10px;
+      }
+    }
+    .sortbyItem {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .sortbyChose {
+      justify-content: center;
+    }
+    .sortbyBox {
+      justify-content: center;
+      flex-direction: column;
+    }
+    .sortbyMore {
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .sortbyGenre {
+      margin-right: 0 !important;
+      margin-bottom: 20px;
+      text-align: center;
+      &::after {
+        bottom: -10px;
+      }
+    }
+    .moreButton {
+      margin-left: 0;
+    }
+    .moreGenres {
+      top: 80%;
+      left: 50%;
+      right: 0;
+      transform: translateX(-50%);
+    }
+  }
+}
+
+@media (max-width: 578px) {
+  .sortby {
+    .moreGenres {
+      width: 90%;
+      a {
+        margin-right: 15px !important;
+      }
+    }
+    .sortbyMore {
+      width: 65%;
+    }
+  }
+}

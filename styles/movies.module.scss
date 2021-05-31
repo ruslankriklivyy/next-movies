@@ -57,3 +57,14 @@
     }
   }
 }
+
+@media (max-width: 520px) {
+  .movies {
+    .title {
+      text-align: center;
+    }
+    .moviesItem {
+      flex-direction: column;
+    }
+  }
+}

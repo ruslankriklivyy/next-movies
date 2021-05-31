@@ -33,3 +33,15 @@
     margin-right: 15px;
   }
 }
+
+@media (max-width: 520px) {
+  .paginationBox {
+    justify-content: center;
+    button {
+      padding: 10px;
+      &:first-child {
+        margin-right: 10px;
+      }
+    }
+  }
+}

@@ -49,6 +49,7 @@
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
+    margin-bottom: 30px;
   }
   .movieDescription {
     line-height: 1.4;
@@ -139,6 +140,46 @@
           margin-right: auto;
         }
       }
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .movieTop {
+    flex-direction: column;
+  }
+  .movieRight {
+    margin-top: 40px;
+  }
+}
+
+@media (max-width: 772px) {
+  .movie {
+    .movieTop {
+      .movieRight {
+        .movieRightActions {
+          button {
+            display: flex;
+            margin-bottom: 10px;
+          }
+        }
+      }
+      .movieLeft {
+        width: 90%;
+        margin-right: 0;
+        img {
+          width: 100%;
+          height: 400px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 378px) {
+  .movie {
+    .movieLeft {
+      width: 100% !important;
     }
   }
 }

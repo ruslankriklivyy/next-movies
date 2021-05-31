@@ -53,3 +53,12 @@
     }
   }
 }
+
+@media (max-width: 578px) {
+  .header {
+    flex-direction: column;
+    &__right {
+      margin-top: 30px;
+    }
+  }
+}

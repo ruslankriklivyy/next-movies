@@ -1,6 +1,6 @@
 ## Next Movies
 
-[Live demo](https://next-movies-tau.vercel.app/)
+▶[Live demo](https://next-movies-tau.vercel.app/)
 
 ![Header](https://github.com/ruslankriklivyy/next-movies/blob/main/public/nextMovies.gif)
 

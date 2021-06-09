@@ -6,7 +6,7 @@
 
 ### In this project I implemented SSR on React, the same WatchMovies, only using a cool technology called NextJS.
 
-### Technologies I use
+### The technologies I used
 - ReactJS
 - TypeScript
 - NextJS (SSR)
